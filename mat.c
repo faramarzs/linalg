@@ -116,8 +116,33 @@ matrix_tp
 matrix_mul(matrix_tp m1, matrix_tp m2)
 {
 
-    /* @TODO: fill me */
-    return NULL;
+    if (m1->m_w != m2->m_h)
+        return NULL;
+    
+    matrix_tp m = matrix_new(m1->m_h, m2->m_w);
+    data_tp dst = m->m_data;
+    data_tp rp = m1->m_data; /* pointer to a row in m1 which is currently used in mul*/
+    for (index_t m1_row = 0; m1_row < m1->m_h; m1_row++) {
+
+        data_tp cp = m2->m_data;
+        for (index_t m2_col = 0; m2_col < m2->m_w; m2_col++) {
+            data_tp x = rp;
+            data_tp y = cp;
+
+            *dst = 0;
+            for (index_t k = 0; k < m1->m_w; k++) {
+                *dst += *x * *y;
+                x++;
+                y += m2->m_w;
+            }
+            ++dst;
+            cp++;
+        }
+
+        rp += m1->m_w;
+    }
+
+    return m;
 }
 
 matrix_tp 

@@ -4,7 +4,7 @@
 #include "mat.h"
 
 int
-main(int argc, char **argv)
+xmain(int argc, char **argv)
 {
 	data_t _coefs[] = {
 		-4, 4, 3,
@@ -35,4 +35,29 @@ main(int argc, char **argv)
 	matrix_free(im);
 
 	return 0;
+}
+
+int
+main(int argc, char **argv)
+{
+	matrix_tp m1 = matrix_new(3, 2);
+	matrix_load(m1, (data_t[]) { 
+		5, -1, 
+		-2, 1, 
+		4, 3
+	});
+	matrix_print("m1", m1);
+	matrix_tp m2 = matrix_new(2, 4);
+	matrix_load(m2, (data_t[]) { 
+		7, -2, 6, 11, 
+		-3, 0, 4, 9
+	});
+	matrix_print("m2", m2);
+	matrix_tp mul = matrix_mul(m1, m2);
+	matrix_print("mul", mul);
+	/* 
+		38, -10, 26, 46,
+		-17, 4, -8, -13,
+		19, -8, 36, 71
+	*/
 }
